@@ -1,6 +1,6 @@
 import csv
 import re
-import work_package2
+import wp2
 
 
 #Create a List of Dicts containing Mac and Port
@@ -57,7 +57,7 @@ def main():
     #Add line names to connects
     add_line_names(connects)
 
-    services = work_package2.api.calls.get_services()
+    services = wp2.api.calls.get_services()
 
     for service in services:
         for connect in connects:

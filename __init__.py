@@ -1,3 +1,3 @@
-import work_package2.api
-import work_package2.areas
-import work_package2.add_service_lines
+import wp2.api
+import wp2.areas
+import wp2.add_service_lines

@@ -1,2 +1,2 @@
-import work_package2.areas.ip_regex
-import work_package2.areas.lines
+import wp2.areas.ip_regex
+import wp2.areas.lines

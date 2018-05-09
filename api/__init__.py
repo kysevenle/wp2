@@ -1,2 +1,2 @@
-import work_package2.api.creds
-import work_package2.api.calls
+import wp2.api.creds
+import wp2.api.calls
