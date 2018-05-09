@@ -2,6 +2,7 @@ import csv
 import re
 import wp2
 import json
+from urllib.request import urlopen, Request
 
 
 #Create a List of Dicts containing Mac and Port
@@ -78,7 +79,7 @@ def main():
                     'Content-Type': 'application/json',
                     'x-Auth-App-Key': wp2.api.creds.write_key,
                 }
-                request = Request(wp.api.creds.url + 'clients/services/' + str(service['id']), data=values, headers=headers)
+                request = Request(wp2.api.creds.url + 'clients/services/' + str(service['id']), data=values, headers=headers)
                 request.get_method = lambda: 'PATCH'
                 response_body = urlopen(request).read()
                 print(response_body)
