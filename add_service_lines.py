@@ -19,6 +19,8 @@ def get_switch_arp(switch_arp):
                 connect['Mac_Address'] = connect['Mac_Address'][0:2] + connect['Mac_Address'][3:5] + '.' + connect['Mac_Address'][6:8] + connect['Mac_Address'][9:11] + '.' + connect['Mac_Address'][12:14] + connect['Mac_Address'][15:17]
             elif re.fullmatch('\w\w\w\w\w\w\w\w\w\w\w\w', connect['Mac_Address']):
                 connect['Mac_Address'] = connect['Mac_Address'][0:2] + connect['Mac_Address'][2:4] + '.' + connect['Mac_Address'][4:6] + connect['Mac_Address'][6:8] + '.' + connect['Mac_Address'][8:10] + connect['Mac_Address'][10:12]
+            elif re.fullmatch('\w\w\w\w\w\w-\w\w\w\w\w\w', connect['Mac_Address']):
+                connect['Mac_Address'] = connect['Mac_Address'][0:4] + '.' + connect['Mac_Address'][4:6] + connect['Mac_Address'][7:9] + '.' + connect['Mac_Address'][9:13]
         return connects
 
 #Add IPs to connects
