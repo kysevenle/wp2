@@ -1,3 +1,4 @@
 import wp2.api
-import wp2.areas
+from wp2.areas import areas
 import wp2.add_service_lines
+import wp2.test
