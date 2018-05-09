@@ -1,6 +1,7 @@
 import csv
 import re
 import wp2
+import json
 
 
 #Create a List of Dicts containing Mac and Port
@@ -11,8 +12,8 @@ def get_switch_arp(switch_arp):
         connects = [dict(zip(header, row)) for row in reader]
         #convert mac format from xx.xx.xx.xx.xx.xx to xxxx.xxxx.xxxx
         for connect in connects:
-            connect = connect.upper()
-            if re.fullmatch('\w\w\w\w.\w\w\w\w.\w\w\w\w'):
+            connect['Mac_Address'] = connect['Mac_Address'].upper()
+            if re.fullmatch('\w\w\w\w.\w\w\w\w.\w\w\w\w', connect['Mac_Address']):
                 continue
             elif re.fullmatch('\w\w-\w\w-\w\w-\w\w-\w\w-\w\w', connect['Mac_Address']):
                 connect['Mac_Address'] = connect['Mac_Address'][0:2] + connect['Mac_Address'][3:5] + '.' + connect['Mac_Address'][6:8] + connect['Mac_Address'][9:11] + '.' + connect['Mac_Address'][12:14] + connect['Mac_Address'][15:17]
@@ -67,6 +68,18 @@ def main():
                 continue
             elif connect['IP'] in service['ipRanges']:
                 print(str(service['clientId']) + ' - ' + connect['Line'])
+                values = {}
+                values['note'] = connect['Line']
+                values = json.dumps(values)
+                values = str.encode(values)
+                headers = {
+                    'Content-Type': 'application/json',
+                    'x-Auth-App-Key': wp2.api.creds.write_key,
+                }
+                request = Request(wp.api.creds.url + 'clients/services/' + str(service['id']), data=values, headers=headers)
+                request.get_method = lambda: 'PATCH'
+                response_body = urlopen(request).read()
+                print(response_body)
 
 if __name__ == '__main__':
     main()
