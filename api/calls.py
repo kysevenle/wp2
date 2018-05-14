@@ -23,3 +23,6 @@ def get_services(clientId=''):
 
 def get_clients(clientId=''):
     return fetch(wp2.api.creds.read_key, 'clients' + clientId)
+
+def get_invoices(id='', params=''):
+    return fetch(wp2.api.creds.read_key, 'invoices' + id + params)
