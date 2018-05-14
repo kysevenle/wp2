@@ -18,11 +18,8 @@ def fetch(api_key, endpoint):
     return data
 
 
-def get_services():
-    return fetch(wp2.api.creds.read_key, 'clients/services')
+def get_services(clientId=''):
+    return fetch(wp2.api.creds.read_key, 'clients' + clientId + '/services')
 
-def get_clients():
-    return fetch(wp2.api.creds.read_key, 'clients')
-
-def get_clients_services(client_id):
-    return fetch(wp2.api.creds.read_key, 'clients/' + client_id + '/services')
+def get_clients(clientId=''):
+    return fetch(wp2.api.creds.read_key, 'clients' + clientId)
