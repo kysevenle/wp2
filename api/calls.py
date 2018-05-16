@@ -36,3 +36,18 @@ def update_client(clientId, payload):
     payload = json.dumps(payload)
     payload = str.encode(payload)
     return update(wp2.api.creds.write_key, 'clients/' + clientId, payload)
+
+def create(api_key, endpoint, payload):
+    headers = {
+        'Content-Type': 'application/json',
+        'x-Auth-App-Key': api_key,
+    }
+
+    response = requests.post(wp2.api.creds.url + endpoint, payload, headers=headers)
+    print(response)
+    return response
+
+def create_payment(payload):
+    payload = json.dumps(payload)
+    payload = str.encode(payload)
+    return create(wp2.api.creds.write_key, 'payments', payload)
