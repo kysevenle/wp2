@@ -51,3 +51,8 @@ def create_payment(payload):
     payload = json.dumps(payload)
     payload = str.encode(payload)
     return create(wp2.api.creds.write_key, 'payments', payload)
+
+def create_job(payload):
+    payload = json.dumps(payload)
+    payload = str.encode(payload)
+    return create(wp2.api.creds.write_key, 'scheduling/jobs', payload)
