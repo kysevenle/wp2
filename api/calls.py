@@ -22,6 +22,15 @@ def get_clients(clientId=''):
 def get_invoices(id='', params=''):
     return fetch(wp2.api.creds.read_key, 'invoices' + id + params)
 
+def get_devices():
+    return fetch(wp2.api.creds.read_key, 'devices')
+
+def get_service_devices(serviceId):
+    return fetch(wp2.api.creds.read_key, 'clients/services/' + serviceId + '/service-devices')
+
+def get_device_ints(device_id):
+    return fetch(wp2.api.creds.read_key, 'devices/' + device_id + '/device-interfaces')
+
 
 def update(api_key, endpoint, payload):
     headers = {
