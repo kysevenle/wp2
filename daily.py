@@ -22,7 +22,7 @@ def credit_balance_check():
     clients = wp2.api.calls.get_clients()
     for client in clients:
         if client['accountOutstanding'] != 0 and client['accountCredit'] != 0:
-            if round(client['accountBalance']) == round(client['accountCredit']):
+            if round(client['accountBalance'], 2) == round(client['accountCredit'], 2):
                 continue
             else:
                 payload = {
