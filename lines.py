@@ -23,7 +23,7 @@ def main():
             interface_id = service_device['interfaceId']
             print(str(interface_id) + '----' + str(service_device['id']))
             if interfaces.get(interface_id) == None:
-                no_interface.append(service['clientId'])
+                no_interface.append(service)
             else:
                 for ip in service['ipRanges']:
                     interfaces[interface_id]['clientIps'].append(ip)
@@ -35,6 +35,13 @@ def main():
             with open(r'C:/Users/Kyle/Desktop/lines/' + interface_info['deviceName'] + '_' + interface_info['name'] + '.txt', 'w') as file:
                 for ip in interface_info['clientIps']:
                     file.write(ip + '\n')
+
+    with open(r'C:/Users/Kyle/Desktop/lines/services_without_interface.txt', 'w') as file:
+        for service in no_interface:
+            file.write(str(service['clientId']) + '\n')
+            for ip in service['ipRanges']:
+                file.write(ip + '\n')
+            file.write('\n')
 
 
 if __name__ == "__main__":
