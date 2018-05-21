@@ -1,7 +1,7 @@
 import wp2
 import datetime
 
-def late_fee_check():
+def late_fee_check(days_late=16):
     invoices = wp2.api.calls.get_invoices('?overdue=1')
     today = datetime.date.today()
     for invoice in invoices:
@@ -10,7 +10,7 @@ def late_fee_check():
         year, month, day = due_date.split('-')
         due_date = datetime.date(int(year), int(month), int(day))
         days_overdue = today - due_date
-        if days_overdue == datetime.timedelta(days=16) and invoice['total'] - invoice['amountPaid'] <= 15:
+        if days_overdue == datetime.timedelta(days_late) and invoice['total'] - invoice['amountPaid'] <= 15:
             payload = {
                 'title': 'Remove late fee',
                 'description': 'Remove late fee from account before invoices are processed',
