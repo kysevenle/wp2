@@ -10,7 +10,7 @@ def upload_vanco_batches():
     for client in clients_list:
         id = client['userIdent']
         clients[id] = client
-    with os.scandir(r'C:\Users\Kyle\Desktop\vanco_batches') as files:
+    with os.scandir(r'C:\Users\Kyle\Dropbox\vanco_batches') as files:
         for file in files:
             with open(file.path) as batch:
                 reader = csv.DictReader(batch, fieldnames=fieldnames)
@@ -24,15 +24,16 @@ def upload_vanco_batches():
                     payment_time = f"{row['datePaid']}T12:00:00+0000"
                     payload = {
                         'clientId': id,
-                        'method': 11,
+                        'method': 99,
                         'createdDate': payment_time,
                         'amount': round(amount, 2),
                         'currencyCode': 'USD',
-                        #'providerName': 'Vanco',
-                        #'providerPaymentId': row['vancoId'],
-                        #'providerPaymentTime': payment_time,
-                        #'applyToInvoicesAutomatically': True,
+                        'providerName': 'Vanco',
+                        'providerPaymentId': row['referanceNumber'],
+                        'providerPaymentTime': payment_time,
+                        'applyToInvoicesAutomatically': True,
                     }
                     print(payment_time + ' - ' + row['firstName'] + ', ' + row['lastName'])
                     #print(payload)
                     wp2.api.calls.create_payment(payload)
+            os.rename(file.path, r"C:\Users\Kyle\Dropbox\Vanco Batches Archive" + '\\' + file.name)
