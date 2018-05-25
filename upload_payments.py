@@ -4,14 +4,6 @@ import os
 import calendar
 
 
-def get_clients_as_dict():
-    clients_list = wp2.api.calls.get_clients()
-    clients = {}
-    for client in clients_list:
-        id = client['userIdent']
-        clients[id] = client
-    return clients
-
 def auth_d_to_ucrm_d(auth_d):
     date = auth_d.split()[0]
     year = date.split('-')[2]
@@ -94,7 +86,7 @@ def upload_authorize_batches(clients):
             os.rename(file.path, r"C:\Users\Kyle\Dropbox\Authorize Batches Archive" + '\\' + file.name)
 
 def main():
-    clients = get_clients_as_dict()
+    clients = wp2.api.calls.get_clients_as_dict()
     upload_vanco_batches(clients)
     upload_authorize_batches(clients)
 

@@ -19,6 +19,14 @@ def get_services(clientId=''):
 def get_clients(clientId=''):
     return fetch(wp2.api.creds.read_key, 'clients' + clientId)
 
+def get_clients_as_dict():
+    clients_list = wp2.api.calls.get_clients()
+    clients = {}
+    for client in clients_list:
+        id = client['userIdent']
+        clients[id] = client
+    return clients
+
 def get_invoices(id='', params=''):
     return fetch(wp2.api.creds.read_key, 'invoices' + id + params)
 
