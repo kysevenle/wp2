@@ -64,8 +64,7 @@ def upload_vanco_batches(clients):
             os.rename(file.path, r"C:\Users\Kyle\Dropbox\Vanco Batches Archive" + '\\' + file.name)
 
 
-def upload_authorize_batches():
-    clients = get_clients_as_dict()
+def upload_authorize_batches(clients):
     with os.scandir(r'C:\Users\Kyle\Dropbox\Authorize Batches') as files:
         for file in files:
             with open(file.path) as batch:
@@ -97,3 +96,7 @@ def upload_authorize_batches():
 def main():
     clients = get_clients_as_dict()
     upload_vanco_batches(clients)
+    upload_authorize_batches(clients)
+
+if __name__ == "__main__":
+    main()
