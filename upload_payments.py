@@ -12,12 +12,19 @@ def auth_d_to_ucrm_d(auth_d):
     day = date.split('-')[0]
     if auth_d.split()[2] == 'PM':
         time = auth_d.split()[1]
-        hour = int(time.split(':')[0]) + 12
+        if int(time.split(':')[0]) == 12:
+            hour = int(time.split(':')[0])
+        else:
+            hour = int(time.split(':')[0]) + 12
         minute = time.split(':')[1]
         second = time.split(':')[2]
         time = f"{hour}:{minute}:{second}"
     else:
         time = auth_d.split()[1]
+        if int(time.split(':')[0]) == 12:
+            hour = int(time.split(':')[0]) - 12
+        else:
+            hour = int(time.split(':')[0])
         hour = time.split(':')[0]
         minute = time.split(':')[1]
         second = time.split(':')[2]
