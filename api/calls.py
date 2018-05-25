@@ -20,7 +20,9 @@ def get_services_as_dict():
     services_list = wp2.api.calls.get_services()
     services = {}
     for service in services:
-        continue
+        id = service['id']
+        service[id] = service
+    return services
 
 def get_clients(clientId=''):
     return fetch(wp2.api.creds.read_key, 'clients' + clientId)
