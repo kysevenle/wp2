@@ -86,7 +86,7 @@ def upload_authorize_batches(clients):
             os.rename(file.path, r"C:\Users\Kyle\Dropbox\Authorize Batches Archive" + '\\' + file.name)
 
 def main():
-    clients = wp2.api.calls.get_clients_as_dict()
+    clients = wp2.api.calls.get_clients_as_dict('userIdent')
     upload_vanco_batches(clients)
     upload_authorize_batches(clients)
 

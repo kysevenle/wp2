@@ -16,14 +16,20 @@ def fetch(api_key, endpoint):
 def get_services(clientId=''):
     return fetch(wp2.api.creds.read_key, 'clients' + clientId + '/services')
 
+def get_services_as_dict():
+    services_list = wp2.api.calls.get_services()
+    services = {}
+    for service in services:
+        continue
+
 def get_clients(clientId=''):
     return fetch(wp2.api.creds.read_key, 'clients' + clientId)
 
-def get_clients_as_dict():
+def get_clients_as_dict(key):
     clients_list = wp2.api.calls.get_clients()
     clients = {}
     for client in clients_list:
-        id = client['userIdent']
+        id = client[key]
         clients[id] = client
     return clients
 
