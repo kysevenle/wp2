@@ -5,3 +5,4 @@ import wp2.maintain
 import wp2.daily
 import wp2.lines
 import wp2.upload_payments
+import wp2.check_changes
