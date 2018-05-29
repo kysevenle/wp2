@@ -27,7 +27,7 @@ def get_services_as_dict():
 def get_clients(clientId=''):
     return fetch(wp2.api.creds.read_key, 'clients' + clientId)
 
-def get_clients_as_dict(key):
+def get_clients_as_dict(key='id'):
     clients_list = wp2.api.calls.get_clients()
     clients = {}
     for client in clients_list:
@@ -75,7 +75,7 @@ def create_payment(payload):
     payload = json.dumps(payload)
     payload = str.encode(payload)
     response = create(wp2.api.creds.write_key, 'payments', payload)
-    print(response)
+    return(response)
 
 def create_job(payload):
     payload = json.dumps(payload)

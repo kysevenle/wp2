@@ -2,7 +2,14 @@ import csv
 import wp2
 import os
 import calendar
+import logging
 
+
+logging.basicConfig(
+    filename=r'C:\Users\Kyle\Dropbox\payments.log',
+    level=logging.INFO,
+    format='%(asctime)s:%(levelname)s:%(message)s'
+)
 
 def auth_d_to_ucrm_d(auth_d):
     date = auth_d.split()[0]
@@ -37,6 +44,7 @@ def upload_vanco_batches(clients):
     fieldnames = ['vancoId', 'vancoName', 'accountNumber', 'amount', 'datePaid', 'dateDeposited', 'unknown1', 'unknown2', 'referanceNumber', 'firstName', 'middleInitial', 'lastName', 'address', 'unknown3', 'city', 'state', 'zip']
     with os.scandir(r'C:\Users\Kyle\Dropbox\vanco_batches') as files:
         for file in files:
+            logging.info(f"Uploading payments from {file}")
             with open(file.path) as batch:
                 reader = csv.DictReader(batch, fieldnames=fieldnames)
                 for row in reader:
@@ -58,14 +66,17 @@ def upload_vanco_batches(clients):
                         'applyToInvoicesAutomatically': True,
                     }
                     print(payment_time + ' - ' + row['firstName'] + ', ' + row['lastName'])
-                    #print(payload)
-                    wp2.api.calls.create_payment(payload)
+                    response = wp2.api.calls.create_payment(payload)
+                    print(response)
+                    logging.info(f"{response} - {row['referanceNumber']} - {row['firstName']} - {row['lastName']}")
+            logging.info(f"Finished uploading payments for {file}")
             os.rename(file.path, r"C:\Users\Kyle\Dropbox\Vanco Batches Archive" + '\\' + file.name)
 
 
 def upload_authorize_batches(clients):
     with os.scandir(r'C:\Users\Kyle\Dropbox\Authorize Batches') as files:
         for file in files:
+            logging.info(f"Uploading payments from {file}")
             with open(file.path) as batch:
                 reader = csv.DictReader(batch, delimiter='\t')
                 for row in reader:
@@ -89,11 +100,14 @@ def upload_authorize_batches(clients):
                         'applyToInvoicesAutomatically': True,
                     }
                     print(row['Transaction ID'] + ' - ' + row['Customer First Name'] + ', ' + row['Customer Last Name'])
-                    wp2.api.calls.create_payment(payload)
+                    response = wp2.api.calls.create_payment(payload)
+                    print(response)
+                    logging.info(f"{response} - {row['Transaction ID']} - {row['Customer First Name']} - {row['Customer Last Name']}")
+            logging.info(f"Finished uploading payments for {file}")
             os.rename(file.path, r"C:\Users\Kyle\Dropbox\Authorize Batches Archive" + '\\' + file.name)
 
 def main():
-    clients = wp2.api.calls.get_clients_as_dict('userIdent')
+    clients = wp2.api.calls.get_clients_as_dict(key='userIdent')
     upload_vanco_batches(clients)
     upload_authorize_batches(clients)
 
