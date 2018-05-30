@@ -80,6 +80,8 @@ def upload_authorize_batches(clients):
             with open(file.path) as batch:
                 reader = csv.DictReader(batch, delimiter='\t')
                 for row in reader:
+                    if row['Response Code'] != '1':
+                        continue
                     if row['Customer ID'] == '':
                         account_number = row['Phone']
                     else:
