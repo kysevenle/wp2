@@ -54,10 +54,11 @@ def upload_vanco_batches(clients):
                     else:
                         id = clients[account_number]['id']
                     amount = float(row['amount'])
-                    payment_time = f"{row['datePaid']}T12:00:00+0000"
+                    payment_time = f"{row['datePaid']}T13:00:00-0600"
                     payload = {
                         'clientId': id,
                         'method': 99,
+                        'createdDate': payment_time,
                         'amount': round(amount, 2),
                         'currencyCode': 'USD',
                         'providerName': 'Vanco',
@@ -77,9 +78,10 @@ def upload_authorize_batches(clients):
     with os.scandir(r'C:\Users\Kyle\Dropbox\Authorize Batches') as files:
         for file in files:
             logging.info(f"Uploading payments from {file}")
-            with open(file.path) as batch:
+            with open(file.path, encoding='utf-8-sig') as batch:
                 reader = csv.DictReader(batch, delimiter='\t')
                 for row in reader:
+                    print(row)
                     if row['Response Code'] != '1':
                         continue
                     if row['Customer ID'] == '':
