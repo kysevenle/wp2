@@ -62,6 +62,12 @@ def update_client(clientId, payload):
     payload = str.encode(payload)
     return update(wp2.api.creds.write_key, 'clients/' + clientId, payload)
 
+def update_service_device(service_device_id, payload):
+    payload = json.dumps(payload)
+    payload = str.encode(payload)
+    response = update(wp2.api.creds.write_key, 'clients/services/service-devices/' + service_device_id, payload)
+    return(response)
+
 def create(api_key, endpoint, payload):
     headers = {
         'Content-Type': 'application/json',
