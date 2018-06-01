@@ -6,7 +6,7 @@ import logging
 
 
 logging.basicConfig(
-    filename=r'C:\Users\Kyle\Dropbox\payments.log',
+    filename=r'C:\Users\Kyle\Dropbox\Logs\upload_payments.log',
     level=logging.INFO,
     format='%(asctime)s:%(levelname)s:%(message)s'
 )
