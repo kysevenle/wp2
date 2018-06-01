@@ -22,7 +22,7 @@ def get_late_fees():
         if days_overdue == datetime.timedelta(days=16):
             print(invoice['clientId'])
 
-def late_fee_check(days_late=15):
+def late_fee_check(days_late=14):
     invoices = wp2.api.calls.get_invoices('?overdue=1')
     today = datetime.date.today()
     for invoice in invoices:
