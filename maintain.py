@@ -36,3 +36,19 @@ def remove_signal_stats():
                     id = str(service_device['id'])
                     payload = {'createSignalStatistics': False}
                     response = wp2.api.calls.update_service_device(id, payload)
+
+def remove_ping_stats():
+    services = wp2.api.calls.get_services()
+    for service in services:
+        if service['status'] == 2:
+            continue
+        else:
+            service_devices = wp2.api.calls.get_service_devices(str(service['id']))
+            for service_device in service_devices:
+                if service_device['createPingStatistics'] == False:
+                    continue
+                else:
+                    id = str(service_device['id'])
+                    print(json.dumps(service, indent=4))
+                    payload = {'createPingStatistics': False}
+                    response = wp2.api.calls.update_service_device(id, payload)
