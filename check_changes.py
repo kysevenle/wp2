@@ -19,14 +19,14 @@ def main():
             'clientAddress': clients[clientId]['street1'],
         }
 
-    with open(r'C:\Users\Kyle\Dropbox\connections.json', 'r') as old_connection_file:
+    with open(r'C:\Users\Kyle\Dropbox\Json Files\connections.json', 'r') as old_connection_file:
         old_connections = json.load(old_connection_file)
 
     if json.dumps(connections) == json.dumps(old_connections):
         print("No Changes Detected")
     else:
         print("Changes have been made. Script will run")
-        with open(r'C:\Users\Kyle\Dropbox\connections.json', 'w') as connection_file:
+        with open(r'C:\Users\Kyle\Dropbox\Json Files\connections.json', 'w') as connection_file:
             json.dump(connections, connection_file)
             print("Archive file has been updated")
 

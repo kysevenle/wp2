@@ -32,11 +32,11 @@ def main():
         if not interface_info['clientIps']:
             continue
         else:
-            with open(r'C:/Users/Kyle/Desktop/lines/' + interface_info['deviceName'] + '_' + interface_info['name'] + '.txt', 'w') as file:
+            with open(r'C:/Users/Kyle/Dropbox/Text Files/lines/' + interface_info['deviceName'] + '_' + interface_info['name'] + '.txt', 'w') as file:
                 for ip in interface_info['clientIps']:
                     file.write(ip + '\n')
 
-    with open(r'C:/Users/Kyle/Desktop/lines/services_without_interface.txt', 'w') as file:
+    with open(r'C:/Users/Kyle/Dropbox/Text Files/lines/services_without_interface.txt', 'w') as file:
         for service in no_interface:
             file.write(str(service['clientId']) + '\n')
             for ip in service['ipRanges']:
