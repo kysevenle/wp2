@@ -83,3 +83,15 @@ def remove_ping_stats():
                     print(json.dumps(service, indent=4))
                     payload = {'createPingStatistics': False}
                     response = wp2.api.calls.update_service_device(id, payload)
+
+def find_empty_locations():
+    services = wp2.api.calls.get_services()
+    for service in services:
+        if service['addressGpsLat'] == None:
+            payload = {
+                'title': 'Resolve GPS',
+                'description': "Client has service with no gps location. Resolve GPS",
+                'clientId': service['clientId'],
+            }
+            wp2.api.calls.create_job(payload)
+            print(service['clientId'])
