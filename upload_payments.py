@@ -103,7 +103,10 @@ def upload_authorize_batches(clients):
                         'applyToInvoicesAutomatically': True,
                     }
                     print(row['Transaction ID'] + ' - ' + row['Customer First Name'] + ', ' + row['Customer Last Name'])
-                    response = wp2.api.calls.create_payment(payload)
+                    if row['Action Code'] == 'CREDIT':
+                        response = wp2.api.calls.create_refund(payload)
+                    else:
+                        response = wp2.api.calls.create_payment(payload)
                     print(response)
                     logging.info(f"{response} - {row['Transaction ID']} - {row['Customer First Name']} - {row['Customer Last Name']}")
             logging.info(f"Finished uploading payments for {file}")

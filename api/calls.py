@@ -83,6 +83,12 @@ def create_payment(payload):
     response = create(wp2.api.creds.write_key, 'payments', payload)
     return(response)
 
+def create_refund(payload):
+    payload = json.dumps(payload)
+    payload = str.encode(payload)
+    response = create(wp2.api.creds.write_key, 'refunds', payload)
+    return(response)
+
 def create_job(payload):
     payload = json.dumps(payload)
     payload = str.encode(payload)

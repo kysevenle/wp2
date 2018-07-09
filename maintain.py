@@ -19,7 +19,7 @@ def get_late_fees():
         year, month, day = due_date.split('-')
         due_date = datetime.date(int(year), int(month), int(day))
         days_overdue = today - due_date
-        if days_overdue == datetime.timedelta(days=16):
+        if days_overdue == datetime.timedelta(days=15):
             print(invoice['clientId'])
 
 def late_fee_check(days_late=14):
