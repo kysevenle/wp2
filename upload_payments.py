@@ -70,6 +70,12 @@ def upload_vanco_batches(clients):
                     response = wp2.api.calls.create_payment(payload)
                     print(response)
                     logging.info(f"{response} - {row['referanceNumber']} - {row['firstName']} - {row['lastName']}")
+                    # payload = {
+                    #     'title': 'Remove late fee',
+                    #     'description': 'Remove late fee from account before invoices are processed',
+                    #     'clientId': id,
+                    # }
+                    # wp2.api.calls.create_job(payload)
             logging.info(f"Finished uploading payments for {file}")
             os.rename(file.path, r"C:\Users\Kyle\Dropbox\Vanco Batches Archive" + '\\' + file.name)
 
@@ -93,22 +99,36 @@ def upload_authorize_batches(clients):
                         id = clients[account_number]['id']
                     amount = float(row['Total Amount'])
                     date = auth_d_to_ucrm_d(row['Submit Date/Time'])
-                    payload = {
-                        'clientId': id,
-                        'method': 9,
-                        'createdDate': date,
-                        'amount': round(amount, 2),
-                        'currencyCode': 'USD',
-                        'note': 'Authorize.net Transaction - ' + row['Transaction ID'],
-                        'applyToInvoicesAutomatically': True,
-                    }
                     print(row['Transaction ID'] + ' - ' + row['Customer First Name'] + ', ' + row['Customer Last Name'])
                     if row['Action Code'] == 'CREDIT':
+                        payload = {
+                            'clientId': id,
+                            'method': 9,
+                            'createdDate': date,
+                            'amount': round(amount, 2),
+                            'currencyCode': 'USD',
+                            'note': 'Authorize.net Transaction - ' + row['Transaction ID'],
+                        }
                         response = wp2.api.calls.create_refund(payload)
                     else:
+                        payload = {
+                            'clientId': id,
+                            'method': 9,
+                            'createdDate': date,
+                            'amount': round(amount, 2),
+                            'currencyCode': 'USD',
+                            'note': 'Authorize.net Transaction - ' + row['Transaction ID'],
+                            'applyToInvoicesAutomatically': True,
+                        }
                         response = wp2.api.calls.create_payment(payload)
                     print(response)
                     logging.info(f"{response} - {row['Transaction ID']} - {row['Customer First Name']} - {row['Customer Last Name']}")
+                    # payload = {
+                    #     'title': 'Remove late fee',
+                    #     'description': 'Remove late fee from account before invoices are processed',
+                    #     'clientId': id,
+                    # }
+                    # wp2.api.calls.create_job(payload)
             logging.info(f"Finished uploading payments for {file}")
             os.rename(file.path, r"C:\Users\Kyle\Dropbox\Authorize Batches Archive" + '\\' + file.name)
 
