@@ -135,7 +135,6 @@ def upload_authorize_batches(clients):
 def main():
     clients = wp2.api.calls.get_clients_as_dict(key='userIdent')
     upload_vanco_batches(clients)
-    upload_authorize_batches(clients)
 
 if __name__ == "__main__":
     main()
